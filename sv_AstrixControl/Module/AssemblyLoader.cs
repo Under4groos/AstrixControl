@@ -26,15 +26,28 @@ namespace sv_AstrixControl.Module
             get; set;
         }
 
-        public object RunMethod(string name, object?[]? objects)
+        public bool RunMethod(string name, object?[]? objects, Action<object> Event_Return)
         {
             if (!MethodLoaded.ContainsKey(name))
             {
                 Logger.Append($"Error! {name}");
-                return null;
+                return false;
             }
+            try
+            {
+                var v_ = MethodLoaded[name].Invoke(objects);
+                if (Event_Return != null)
+                {
+                    Event_Return(v_);
+                }
+            }
+            catch (Exception)
+            {
 
-            return MethodLoaded[name].Invoke(objects);
+                return false;
+            }
+            return true;
+
         }
 
         public bool Load(string pathdllfile)

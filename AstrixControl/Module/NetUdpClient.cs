@@ -11,7 +11,7 @@ namespace AstrixControl.Module
         {
 
             var RequestData = Encoding.UTF8.GetBytes(data);
-            Send(RequestData, RequestData.Length, endPoint ?? new IPEndPoint(IPAddress.Broadcast, 8888));
+            Send(RequestData, RequestData.Length, endPoint ?? new IPEndPoint(IPAddress.Broadcast, 8881));
         }
 
         public string ReadString()
@@ -21,6 +21,21 @@ namespace AstrixControl.Module
             try
             {
                 bytes_data = Receive(ref ServerEp);
+            }
+            catch (System.Exception e)
+            {
+
+                Debug.WriteLine(e.Message);
+            }
+            return Encoding.UTF8.GetString(bytes_data);
+        }
+        public string ReadStringAsync()
+        {
+            byte[] bytes_data = { };
+            IPEndPoint ServerEp = new IPEndPoint(IPAddress.Any, 0);
+            try
+            {
+                bytes_data = ReceiveAsync().Result.Buffer;
             }
             catch (System.Exception e)
             {

@@ -6,9 +6,13 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="AstrixControl.Views.MainView"
              x:DataType="vm:MainViewModel">
-  <Design.DataContext>
-    <vm:MainViewModel />
-  </Design.DataContext>
+	<Design.DataContext>
+		<vm:MainViewModel />
+	</Design.DataContext>
 
-  <Button  Content="{Binding Greeting}" Name="_button" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+	<Grid>
+		<Button  Content="{Binding Greeting}" Name="_button" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+		<TextBlock Name="_text_box"/>
+	</Grid>
+
 </UserControl>

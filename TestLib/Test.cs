@@ -5,9 +5,13 @@ namespace TestLib
     public class Test
     {
 
-        public void Show(string data)
+        public string Show(string data)
         {
             Debug.WriteLine(data);
+            Console.WriteLine(data);
+            return data;
         }
+
+
     }
 }

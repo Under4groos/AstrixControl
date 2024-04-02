@@ -1,4 +1,6 @@
 ﻿
+using Newtonsoft.Json;
+using sv_AstrixControl.Model.JsonObjects;
 using sv_AstrixControl.Module;
 using System.Net;
 AssemblyLoader assemblyLoader = new AssemblyLoader();
@@ -21,11 +23,26 @@ foreach (string item in Directory.GetFiles(_directory, "*.dll", SearchOption.All
 }
 
 
-ThreadUdpClient threadUdpClient = new ThreadUdpClient(8888);
+ThreadUdpClient threadUdpClient = new ThreadUdpClient(8881);
 threadUdpClient.EvRequestData += (IPAddress adres, string data) =>
 {
+    json_AssemblyMethod json_object = JsonConvert.DeserializeObject<json_AssemblyMethod>(data);
 
-    assemblyLoader.RunMethod("TestLib.Test.Show", new[] { data });
-    Console.WriteLine(adres.ToString() + data);
+
+    if (json_object != null)
+    {
+        if (assemblyLoader.RunMethod(json_object.AssemblyMethodName, new[] { data }, (obj) =>
+        {
+            threadUdpClient.Send(obj.ToString());
+        }))
+        {
+
+        }
+        else
+        {
+            threadUdpClient.Send("-");
+        }
+
+    }
 };
 threadUdpClient.Init();

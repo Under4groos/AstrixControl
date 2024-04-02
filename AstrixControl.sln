@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{4865274D-5
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestLib", "TestLib\TestLib.csproj", "{67605A05-13F4-4C49-AD78-E097991A2003}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AstrixControl.NaudioModule", "AstrixControl.NaudioModule\AstrixControl.NaudioModule.csproj", "{BF3508FF-372A-43F0-A24D-BEC58E55F80B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,12 +51,17 @@ Global
 		{67605A05-13F4-4C49-AD78-E097991A2003}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{67605A05-13F4-4C49-AD78-E097991A2003}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{67605A05-13F4-4C49-AD78-E097991A2003}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF3508FF-372A-43F0-A24D-BEC58E55F80B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF3508FF-372A-43F0-A24D-BEC58E55F80B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF3508FF-372A-43F0-A24D-BEC58E55F80B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF3508FF-372A-43F0-A24D-BEC58E55F80B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{67605A05-13F4-4C49-AD78-E097991A2003} = {4865274D-5D95-4B9F-90D3-25761DEEEF03}
+		{BF3508FF-372A-43F0-A24D-BEC58E55F80B} = {4865274D-5D95-4B9F-90D3-25761DEEEF03}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {02AFCB23-9F57-4934-80A9-FBA79D54A70C}

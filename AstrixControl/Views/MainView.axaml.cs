@@ -1,6 +1,8 @@
-﻿using AstrixControl.Module;
+﻿using AstrixControl.Model.JsonObjects;
+using AstrixControl.Module;
 using Avalonia.Controls;
-using System.Diagnostics;
+using Newtonsoft.Json;
+using System.Text;
 
 namespace AstrixControl.Views;
 
@@ -8,7 +10,8 @@ public partial class MainView : UserControl
 {
     private NetUdpClient netUdpClient = new NetUdpClient()
     {
-        EnableBroadcast = true
+        EnableBroadcast = true,
+
     };
     public MainView()
     {
@@ -17,10 +20,25 @@ public partial class MainView : UserControl
         _button.Click += _button_Click;
     }
 
-    private void _button_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    private async void _button_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        Debug.WriteLine("asdas");
 
-        netUdpClient.SendString("asdas", null);
+
+        string json = JsonConvert.SerializeObject(new json_AssemblyMethod()
+        {
+            AssemblyMethodName = "TestLib.Test.Show"
+        });
+        netUdpClient.SendString(json, null);
+
+
+        var v = await netUdpClient.ReceiveAsync();
+        _text_box.Text = Encoding.UTF8.GetString(v.Buffer); ;
+        //json_BaseJsonObject json_object = JsonConvert.DeserializeObject<json_BaseJsonObject>(_text_box.Text);
+
+        //Debug.WriteLine(json_object.Code);
+
+
+
+
     }
 }
