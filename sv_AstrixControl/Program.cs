@@ -21,26 +21,11 @@ foreach (string item in Directory.GetFiles(_directory, "*.dll", SearchOption.All
 }
 
 
-
-
-
-
 ThreadUdpClient threadUdpClient = new ThreadUdpClient(8888);
 threadUdpClient.EvRequestData += (IPAddress adres, string data) =>
 {
-    // json 
+
     assemblyLoader.RunMethod("TestLib.Test.Show", new[] { data });
     Console.WriteLine(adres.ToString() + data);
 };
 threadUdpClient.Init();
-//while (true)
-//{
-//    foreach (var item in assemblyLoader.MethodLoaded)
-//    {
-//        Console.WriteLine($"{item.Key}");
-//    }
-
-//    assemblyLoader.RunMethod("TestLib.Test.dShow", new[] { "sad" });
-
-//    Console.ReadKey();
-//}
