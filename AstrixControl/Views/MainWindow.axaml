@@ -8,5 +8,9 @@
         x:Class="AstrixControl.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="AstrixControl">
-        <views:MainView />
+	<Grid>
+		<Image Source="{Binding Chessboard}" Stretch="UniformToFill" Opacity="0.11"/>
+		<views:MainView />
+	</Grid>
+        
 </Window>

@@ -5,6 +5,7 @@
              xmlns:vm="clr-namespace:AstrixControl.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="AstrixControl.Views.MainView"
+			 Background="Transparent"
              x:DataType="vm:MainViewModel">
 	<Design.DataContext>
 		<vm:MainViewModel />
