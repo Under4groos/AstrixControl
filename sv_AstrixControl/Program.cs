@@ -1,49 +1,46 @@
-﻿// See https://aka.ms/new-console-template for more information
-using System.Reflection;
-object build(MethodInfo methodInfo, Type type, object[] parameters)
+﻿
+using sv_AstrixControl.Module;
+using System.Net;
+AssemblyLoader assemblyLoader = new AssemblyLoader();
+
+string _directory = Path.GetFullPath("Libs");
+if (!Directory.Exists(_directory))
+    Directory.CreateDirectory(_directory);
+
+Console.WriteLine($"Loading libs...");
+foreach (string item in Directory.GetFiles(_directory, "*.dll", SearchOption.AllDirectories))
 {
-    var initiatedObject = Activator.CreateInstance(type);
-    return methodInfo.Invoke(initiatedObject, parameters);
+    Console.WriteLine($"Load: {item}");
+    if (assemblyLoader.Load(item))
+    {
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.WriteLine($"Error load: {item}");
+        Console.ForegroundColor = ConsoleColor.White;
+    }
+
 }
 
 
 
-while (true)
+
+
+
+ThreadUdpClient threadUdpClient = new ThreadUdpClient(8888);
+threadUdpClient.EvRequestData += (IPAddress adres, string data) =>
 {
+    // json 
+    assemblyLoader.RunMethod("TestLib.Test.Show", new[] { data });
+    Console.WriteLine(adres.ToString() + data);
+};
+threadUdpClient.Init();
+//while (true)
+//{
+//    foreach (var item in assemblyLoader.MethodLoaded)
+//    {
+//        Console.WriteLine($"{item.Key}");
+//    }
 
-    try
-    {
+//    assemblyLoader.RunMethod("TestLib.Test.dShow", new[] { "sad" });
 
-
-
-        Assembly assembly = Assembly.LoadFile(@"C:\Users\UnderKo\source\repos\AstrixControl\TestLib\bin\Debug\net8.0\TestLib.dll");
-
-        foreach (Type item in assembly.GetTypes())
-        {
-            var properties = item.GetProperties();
-            foreach (MethodInfo _MethodInfo in item.GetMethods())
-            {
-                if (_MethodInfo.Name.StartsWith("Show"))
-                    build(_MethodInfo, item, new[] { "asddas" });
-
-
-                var v = _MethodInfo.GetCustomAttributes(false).First().GetType().Name;
-                Console.WriteLine(_MethodInfo.Name);
-            }
-        }
-
-
-
-        GC.Collect();
-        GC.WaitForPendingFinalizers();
-        GC.Collect();
-
-    }
-    catch (Exception e)
-    {
-        Console.WriteLine(e.Message);
-    }
-
-
-    Console.ReadKey();
-}
+//    Console.ReadKey();
+//}

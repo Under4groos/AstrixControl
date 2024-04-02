@@ -8,7 +8,7 @@ namespace sv_AstrixControl.Module
     {
         public event PropertyChangedEventHandler? PropertyChanged;
         public Action EventLoaded;
-        public Dictionary<string, string> MethodLoaded = new System.Collections.Generic.Dictionary<string, string>();
+        public Dictionary<string, AssemblyMethod> MethodLoaded = new System.Collections.Generic.Dictionary<string, AssemblyMethod>();
         public void OnEventLoaded()
         {
             if (EventLoaded != null)
@@ -26,13 +26,24 @@ namespace sv_AstrixControl.Module
             get; set;
         }
 
-        public void Load(string pathdllfile)
+        public object RunMethod(string name, object?[]? objects)
+        {
+            if (!MethodLoaded.ContainsKey(name))
+            {
+                Logger.Append($"Error! {name}");
+                return null;
+            }
+
+            return MethodLoaded[name].Invoke(objects);
+        }
+
+        public bool Load(string pathdllfile)
         {
             if (!File.Exists(pathdllfile))
-                return;
+                return true;
             DLLFile = new FileInfo(pathdllfile);
             if (!DLLFile.Extension.ToLower().EndsWith(".dll"))
-                return;
+                return true;
             try
             {
                 Assembly assembly = Assembly.LoadFile(pathdllfile);
@@ -42,15 +53,17 @@ namespace sv_AstrixControl.Module
                     var properties = item.GetProperties();
                     foreach (MethodInfo _MethodInfo in item.GetMethods())
                     {
-                        //if (_MethodInfo.Name.StartsWith("Show"))
-                        //{
+                        AssemblyMethod assemblyMethod = new AssemblyMethod()
+                        {
+                            Name = _MethodInfo.Name,
+                            Attributes = (from atr in _MethodInfo.GetCustomAttributes(false) select atr.GetType().Name).ToList(),
+                            methodInfo = _MethodInfo,
+                            TypeMethod = item
+                        };
 
-                        //}
-                        //build(_MethodInfo, item, new[] { "asddas" });
+                        MethodLoaded.Add($"{_MethodInfo.DeclaringType.FullName}.{_MethodInfo.Name}", assemblyMethod);
 
 
-                        var v = _MethodInfo.GetCustomAttributes(false).First().GetType().Name;
-                        Console.WriteLine(_MethodInfo.Name);
                     }
                 }
 
@@ -62,13 +75,14 @@ namespace sv_AstrixControl.Module
 
 
                 OnEventLoaded();
+                return false;
             }
             catch (Exception e)
             {
 
                 Logger.Append(e.Message);
             }
-
+            return true;
         }
     }
 }

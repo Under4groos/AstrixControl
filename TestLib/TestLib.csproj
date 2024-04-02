@@ -4,6 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <BaseOutputPath>C:\Users\UnderKo\source\repos\AstrixControl\sv_AstrixControl\bin\Debug\net8.0\Libs</BaseOutputPath>
   </PropertyGroup>
 
 </Project>
