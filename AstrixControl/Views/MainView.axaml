@@ -11,7 +11,11 @@
 	</Design.DataContext>
 
 	<Grid>
-		<Button  Content="{Binding Greeting}" Name="_button" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+		<StackPanel>
+			<Button  Content="Show" Name="_button" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+			<Button  Content="Hide" Name="_button2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+		</StackPanel>
 		<TextBlock Name="_text_box"/>
 	</Grid>
 
